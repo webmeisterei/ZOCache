@@ -1,0 +1,11 @@
+<component>
+  <sectiontype name="zocachestorage" datatype="ZOCachestorage.ZConfig"
+               implements="ZODB.storage">
+    <section type="ZODB.storage" name="*" attribute="base" required="yes" />
+    <key name="url" datatype="string" required="yes">
+      <description>
+        Connection URL.
+      </description>
+    </key>
+  </sectiontype>
+</component>
