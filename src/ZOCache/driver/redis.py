@@ -29,19 +29,15 @@ except ImportError:
 class RedisCacheDriver(ZOCacheDriverMixin):
     name = 'redis'
 
-    def __init__(self, url):
-        self._url = url
-
-    @property
-    def url(self):
-        return self._url
-
     @classmethod
     def available(cls):
         if not REDIS_AVAILABLE:
             return (False, 'Please install the \"redis\" python module.',)
 
         return (True, '',)
+
+    def close(self):
+        pass
 
 
 Registry.register(RedisCacheDriver)

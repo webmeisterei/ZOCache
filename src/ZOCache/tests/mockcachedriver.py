@@ -13,21 +13,22 @@
 #
 ##############################################################################
 
-import zope.interface
+from zope.interface import implementer
+from ..driver.mixin import ZOCacheDriverMixin
+from ..interfaces import IZOCacheDriver
+from ..registry import Registry
 
 
-# class IZOCache(zope.interface.Interface):
+@implementer(IZOCacheDriver)
+class MockCacheDriver(ZOCacheDriverMixin):
+    name = 'mock'
+
+    @classmethod
+    def available(cls):
+        return (True, '',)
+
+    def close(self):
+        pass
 
 
-class IZOCacheDriver(zope.interface.Interface):
-
-    name = zope.interface.Attribute('The drivers name.')
-    url = zope.interface.Attribute('The drivers connection url.')
-
-    def available():
-        """
-        :return: Tuple with 2 values, Bool success and a message.
-        """
-
-    def close():
-        """ Closes all connections. """
+Registry.register(MockCacheDriver)

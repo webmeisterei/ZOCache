@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2016 Zope Foundation and Contributors.
+# Copyright (c) Zope Foundation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,27 +12,19 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from zope.testing import setupstack
 
-from zope.interface import implementer
-from .mixin import ZOCacheDriverMixin
-from ..interfaces import IZOCacheDriver
-from ..registry import Registry
-
-
-@implementer(IZOCacheDriver)
-class MockCacheDriver(ZOCacheDriverMixin):
-    name = 'mock'
-
-    def __init__(self, url):
-        self._url = url
-
-    @property
-    def url(self):
-        return self._url
-
-    @classmethod
-    def available(cls):
-        return (True, '',)
+import manuel.capture
+import manuel.doctest
+import manuel.testing
+import unittest
 
 
-Registry.register(MockCacheDriver)
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(manuel.testing.TestSuite(
+        manuel.doctest.Manuel() + manuel.capture.Manuel(),
+        '../README.txt',
+        setUp=setupstack.setUpDirectory, tearDown=setupstack.tearDown
+        ))
+    return suite

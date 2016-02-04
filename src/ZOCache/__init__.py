@@ -19,3 +19,4 @@ from .driver import *
 from .url import URL
 
 from .storage import ZOCacheStorage
+from .storage import ZConfig

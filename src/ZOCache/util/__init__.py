@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # util/__init__.py
 # Copyright (C) 2005-2015 the SQLAlchemy authors and contributors
 # <see AUTHORS file>
@@ -7,7 +8,7 @@
 
 from .compat import \
     threading, py3k, py33, py36, py2k, jython, pypy, cpython, win32, \
-    parse_qsl, string_types
+    parse_qsl, string_types, unquote
 
 
 __all__ = (
@@ -21,5 +22,6 @@ __all__ = (
     'cpython',
     'win32',
     'parse_qsl',
-    'string_types'
+    'string_types',
+    'unquote'
 )

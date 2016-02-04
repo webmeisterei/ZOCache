@@ -1,10 +1,10 @@
 <component>
-  <sectiontype name="zocachestorage" datatype="ZOCachestorage.ZConfig"
+  <sectiontype name="zocachestorage" datatype="ZOCache.ZConfig"
                implements="ZODB.storage">
     <section type="ZODB.storage" name="*" attribute="base" required="yes" />
     <key name="url" datatype="string" required="yes">
       <description>
-        Connection URL.
+        Drivers connection URL.
       </description>
     </key>
   </sectiontype>
