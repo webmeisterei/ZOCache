@@ -22,12 +22,12 @@ constructed by passing another storage, as in::
 
     storage = ZOCacheStorage(
         ZODB.FileStorage.FileStorage('data.fs'),
-        'mock://user:password@localhost:1313/db'
+        'mock://user:password@localhost:1313/prefix?timeout=5'
     )
 
 .. -> src
 
-The above code will give you a ``mock`` driver which would connect to localhost:1313 and the db ``db``
+The above code will give you a ``mock`` driver which would connect to localhost:1313 and the db ``prefix``
 with the user ``user`` and password ``password``.
 
     >>> exec src
@@ -47,6 +47,9 @@ with the user ``user`` and password ``password``.
     1313
 
     >>> storage.driver.url.database
-    'db'
+    'prefix'
+
+    >>> storage.driver.url.query['timeout']
+    '5'
 
     >>> storage.close()

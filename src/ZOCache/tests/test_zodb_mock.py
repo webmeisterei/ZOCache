@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) Zope Foundation and Contributors.
@@ -15,7 +16,6 @@ from zope.testing import setupstack
 
 import ZOCache
 import doctest
-import os
 import transaction
 import unittest
 import ZEO.tests.testZEO
@@ -28,6 +28,12 @@ import ZODB.tests.testFileStorage
 import ZODB.utils
 import zope.interface.verify
 from . import mockcachedriver
+
+
+# For PEP8 checks
+_ = transaction
+_ = zope.interface.verify
+_ = mockcachedriver
 
 
 def test_config():
@@ -188,15 +194,14 @@ class FileStorageZEOZOCacheTests(ZEO.tests.testZEO.FileStorageTests):
 
 def test_suite():
     suite = unittest.TestSuite()
-    for class_ in (
-        FileStorageZOCacheTests,
-        FileStorageZOCacheTestsWithBlobsEnabled,
-        FileStorageZOCacheRecoveryTest,
-        FileStorageZEOZOCacheTests,
-    ):
+    for class_ in (FileStorageZOCacheTests,
+                   FileStorageZOCacheTestsWithBlobsEnabled,
+                   FileStorageZOCacheRecoveryTest,
+                   FileStorageZEOZOCacheTests):
+
         s = unittest.makeSuite(class_, "check")
         s.layer = ZODB.tests.util.MininalTestLayer(
-            'zocachestoragetests.%s' % class_.__name__)
+            'mock_zocachestoragetests.%s' % class_.__name__)
         suite.addTest(s)
 
     suite.addTest(doctest.DocTestSuite(

@@ -14,9 +14,9 @@
 ##############################################################################
 
 from zope.interface import implementer
-from .mixin import ZOCacheDriverMixin
 from ..interfaces import IZOCacheDriver
 from ..registry import Registry
+from ..url import URL
 
 try:
     import redis
@@ -26,8 +26,15 @@ except ImportError:
 
 
 @implementer(IZOCacheDriver)
-class RedisCacheDriver(ZOCacheDriverMixin):
+class RedisCacheDriver(object):
     name = 'redis'
+
+    def __init__(self, url):
+        self._url = URL.from_string(url)
+
+    @property
+    def url(self):
+        return self._url
 
     @classmethod
     def available(cls):

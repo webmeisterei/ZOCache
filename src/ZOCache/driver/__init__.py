@@ -14,9 +14,17 @@
 ##############################################################################
 """ """
 
+from .redis import REDIS_AVAILABLE
 from .redis import RedisCacheDriver
+
+from .memcached import MEMCACHED_AVAILABLE
+from .memcached import MemcachedCacheDriver
 
 
 __all__ = (
+    'REDIS_AVAILABLE',
     'RedisCacheDriver',
+
+    'MEMCACHED_AVAILABLE',
+    'MemcachedCacheDriver',
 )

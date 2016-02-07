@@ -72,8 +72,12 @@ class URL(object):
 
         if isinstance(name_or_url, util.string_types):
             return _parse_rfc1738_args(name_or_url)
-        else:
+        elif isinstance(name_or_url, URL):
             return name_or_url
+        else:
+            raise AttributeError(
+                'Invalid type for name_or_url %r' % name_or_url
+            )
 
     def __to_string__(self, hide_password=True):
         s = self.drivername + "://"
@@ -143,7 +147,7 @@ def _parse_rfc1738_args(name):
             components['database'] = tokens[0]
             query = (
                 len(tokens) > 1 and dict(util.parse_qsl(tokens[1]))) or None
-            if util.py2k and query is not None:
+            if not util.PY3 and query is not None:
                 query = dict((k.encode('ascii'), query[k]) for k in query)
         else:
             query = None

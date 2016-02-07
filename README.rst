@@ -36,7 +36,7 @@ Symlink either ``zodb3.cfg`` or ``zodb4.cfg`` to ``buildout.cfg``::
 
     $ ln -s zodb4.cfg buildout.cfg
 
-With IPython::
+Let buildout build it with IPython::
 
     $ ./bin/buildout -c ipzope.cfg
 
@@ -47,6 +47,10 @@ Or without::
 Run the testsuite::
 
     $ ./bin/test -v1
+
+To run the testsuite for the memcached driver (you need a running local memcached)::
+
+    $ MEMCACHED_URL=memcached://localhost:11211/t1 ./bin/test -v1 -m test_zodb_memcached
 
 
 Contribute

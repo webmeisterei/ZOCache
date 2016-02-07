@@ -20,3 +20,5 @@ from .url import URL
 
 from .storage import ZOCacheStorage
 from .storage import ZConfig
+
+from .notavailable import notAvailable

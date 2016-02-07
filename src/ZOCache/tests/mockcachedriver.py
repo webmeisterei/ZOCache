@@ -13,15 +13,28 @@
 #
 ##############################################################################
 
+import threading
 from zope.interface import implementer
-from ..driver.mixin import ZOCacheDriverMixin
 from ..interfaces import IZOCacheDriver
 from ..registry import Registry
+from ..notavailable import notAvailable
+from ..url import URL
 
 
 @implementer(IZOCacheDriver)
-class MockCacheDriver(ZOCacheDriverMixin):
+class MockCacheDriver(object):
     name = 'mock'
+
+    def __init__(self, url):
+        self._url = URL.from_string(url)
+
+        self._cache = {}
+
+        self._lock = threading.Lock()
+
+    @property
+    def url(self):
+        return self._url
 
     @classmethod
     def available(cls):
@@ -29,6 +42,19 @@ class MockCacheDriver(ZOCacheDriverMixin):
 
     def close(self):
         pass
+
+    def load(self, int_oid):
+        with self._lock:
+            key = int_oid
+            if key not in self._cache:
+                return notAvailable
+
+            return self._cache[key]
+
+    def store(self, int_oid, b_prev_tid, data):
+        with self._lock:
+            key = int_oid
+            self._cache[key] = data
 
 
 Registry.register(MockCacheDriver)
